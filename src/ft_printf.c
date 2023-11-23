@@ -9,13 +9,8 @@
 /*   Updated: 2023/10/24 19:06:53 by schavez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft/libft.h"
-#include <string.h>
-#include <stdarg.h>
-#include <unistd.h>
 
-#define HEX_LOWER "0123456789abcdef"
-#define HEX_UPPER "0123456789ABCDEF"
+#include "../include/ft_printf.h"
 
 
 void	ft_put_chr(char c, int *total)
@@ -56,7 +51,6 @@ void	ft_handle_p(unsigned long n, int *total, int i)
 		ft_handle_p(n / 16, total, ++i);
 		ft_put_chr(HEX_LOWER[n % 16], total);
 	}
-
 }
 
 void	ft_handle_int(long n, int *total)
@@ -117,7 +111,8 @@ void	all_possible(char *fmt,va_list args, int i, int *total)
 		ft_put_chr('%', total);
 }
 
-int	ft_printf(const char *format, ...) {
+int	ft_printf(const char *format, ...) 
+{
 	va_list	args;
 	int	i;
 	int	total;
@@ -136,4 +131,3 @@ int	ft_printf(const char *format, ...) {
 	va_end(args);
 	return (total);
 }
-
