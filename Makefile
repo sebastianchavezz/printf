@@ -1,36 +1,27 @@
-NAME :=		libftprintf.a
-CC :=		gcc
-CFLAGS :=	-Wall -Wextra -Werror
-AR :=		ar rcs
-OBJDIR :=	obj
+NAME = libftprintf.a
 
+CC = cc
+CFLAGS = -Wall -Werror -Wextra
+AR = ar
+ARFLAGS = rcs
 
-SRCS := src/ft_printf.c
+SRC := ft_printf.c ft_handle_string.c ft_handle_num.c ft_handle_hex.c
+OBJ := $(SRC:.c=.o)
 
-OBJS : $(SRCS:%.c=$(OBJDIR)/%.o)
-	
+all : $(NAME)
 
-HEADERS := include/ft_printf.h
+$(NAME) : $(OBJ)
+	$(AR) $(ARFLAGS) $(NAME) $^
 
-all:	$(NAME)
+%.o : %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME):	$(OBJS) $(HEADERS)
-				$(AR) $@ $^
-				echo "Compiled $@"
+clean : 
+	rm -f $(OBJ)
 
-$(OBJDIR)/%.o: %.c $(HEADERS)                                       
-				mkdir -p $(@D)
-				echo "Compiling $@"
-				$(CC) -c $(CFLAGS) $< -o $@
+fclean : clean
+	rm -f $(NAME)
 
-clean:
-				rm -rf $(OBJDIR)
+re : fclean all
 
-fclean:	
-				make clean
-				rm -f $(NAME)
-
-re: fclean all
-
-.SILENT:
-.PHONY: all clean fclean re
+.PHONY : all clean fclean re
